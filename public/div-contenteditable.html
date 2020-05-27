@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="info" contenteditable="true">123</div>
+<script>
+    let c = localStorage.getItem('myContent') || '預設值';
+    info.innerText = c;
+
+    info.addEventListener('input', (event)=>{
+       console.log(info.innerText)
+
+        localStorage.setItem('myContent', info.innerText)
+    });
+
+    info.addEventListener('blur', (event)=>{
+        console.log('blur:', info.innerText)
+    });
+
+</script>
+</body>
+</html>
