@@ -69,8 +69,10 @@
         const id = event.originalEvent.dataTransfer.getData('text');
         console.log(id);
         // 物件只有一個，只需append，不須多做移除
-        // $(event.target).append($('#'+id));
+        // $(event.target).append($('#'+id));           
         $(event.currentTarget).append($('#'+id));   // 需指定currentTarget才會限定target為rect2
+        //targer        -->觸發事件的數據類型
+        //currentTarget -->觸發當前處理事件的事件監聽器的DOM物件
     });
 
 </script>
