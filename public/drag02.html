@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        .rect {
+            position: relative;
+            width: 800px;
+            height: 600px;
+            background-color: #a8f1f1;
+        }
+        .ball {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #b15693;
+            border-radius: 50%;
+            left: 100px;
+            top:100px;
+        }
+        .rect2 {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #51612b;
+            left: 100px;
+            top:300px;
+        }
+    </style>
+</head>
+<body>
+<div class="rect">
+    <div class="ball" draggable="true"></div>
+    <div class="rect2"></div>
+</div>
+
+<script>
+    const ball = document.querySelector('.ball');
+    const rect2 = document.querySelector('.rect2');
+
+    const listener = event=>{
+        console.log(this);   // this對應到ball(箭頭函式)
+        console.log(event);
+        console.log(event.type, event.target);
+    }
+
+    ball.addEventListener('dragstart', listener);
+    ball.addEventListener('dragend', listener);
+
+    rect2.addEventListener('dragenter', listener);
+    rect2.addEventListener('dragleave', listener);
+    rect2.addEventListener('dragover', function(event){
+        event.preventDefault();
+    });
+    rect2.addEventListener('drop', listener);
+
+</script>
+
+
+</body>
+</html>

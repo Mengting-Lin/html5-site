@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<canvas id="myCanvas" width="640" height="480"></canvas>
+
+<script>
+    const myCanvas = document.getElementById('myCanvas');
+    const ctx = myCanvas.getContext('2d');
+
+    // 繪製由紅到黑漸層色的17個正方形
+    for(let green=0; green<16; green++) {
+        for (let red = 0; red < 16; red++) {
+            ctx.fillStyle = `rgb(${red*17},${green*17},0)`;
+            ctx.fillRect(40*red, green*30, 40, 40);
+        }
+    }
+
+
+
+    // for(let red=0; red<256; red++){
+    //     ctx.fillStyle = `rgb(${red},0,0)`;
+    //     ctx.fillRect(2*red, 0, 2, 30);
+    // }
+
+
+</script>
+</body>
+</html>

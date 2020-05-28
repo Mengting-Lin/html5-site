@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas {
+            border: 1px dashed green;
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="640" height="480"></canvas>
+<div id="info"></div>
+<script>
+    const myCanvas = document.querySelector('#myCanvas');
+    const ctx = myCanvas.getContext('2d');
+
+    // function drawCircle(x=0, y=0, r=10, color='black'){
+    //     ctx.beginPath();
+    //     ctx.arc(x, y, r, 0, 2*Math.PI);
+    //     ctx.fillStyle = color;
+    //     ctx.fill();
+    // }
+
+    function drawRec(x=0, y=0, width=10, height=10, color='orange'){
+        ctx.beginPath();
+        ctx.fillStyle = color;
+        ctx.fillRect(x, y, width, height);
+    }
+
+    const mMove = event=>{
+        // console.log(event);
+        info.innerText = `${event.offsetX}, ${event.offsetY}`;
+        // drawCircle(event.offsetX,event.offsetY,5,'red');
+        drawRec(event.offsetX,event.offsetY,10,10,'red');
+    };
+
+    const mUp = event=>{
+        myCanvas.removeEventListener('mousemove', mMove);
+        window.removeEventListener('mouseup', mUp);          
+    };
+
+    const mDown = event=>{
+        myCanvas.addEventListener('mousemove', mMove);
+        window.addEventListener('mouseup', mUp);        
+    };
+
+    myCanvas.addEventListener('mousedown', mDown);
+
+
+</script>
+</body>
+</html>

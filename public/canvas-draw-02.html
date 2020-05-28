@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        canvas {
+            border: 1px dashed green;
+        }
+    </style>
+</head>
+<body>
+<canvas id="myCanvas" width="640" height="480"></canvas>
+<div id="info"></div>
+<script>
+    const myCanvas = document.querySelector('#myCanvas');
+    const ctx = myCanvas.getContext('2d');
+    ctx.strokeStyle = 'red';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.lineJoin = 'round';
+
+    const mDown = event=>{
+        ctx.beginPath();
+        ctx.moveTo(event.offsetX, event.offsetY);
+        myCanvas.addEventListener('mousemove', mMove);
+        window.addEventListener('mouseup', mUp);
+    };
+    const mUp = event=>{
+        myCanvas.removeEventListener('mousemove', mMove);
+        window.removeEventListener('mouseup', mUp);
+    };
+    const mMove = event=>{
+        console.log(event);
+        ctx.lineTo(event.offsetX, event.offsetY);
+        ctx.stroke();
+        info.innerText = `${event.offsetX}, ${event.offsetY}`;
+
+    };
+
+    myCanvas.addEventListener('mousedown', mDown);
+
+</script>
+</body>
+</html>
