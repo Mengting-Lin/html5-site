@@ -21,7 +21,7 @@
             text-align: center;
             line-height: 100px;
         }
-        .rect2 {
+        .rect2, .rect3 {
             position: absolute;
             width: 300px;
             height: 300px;
@@ -34,7 +34,7 @@
 <body>
 <div class="rect">
 
-    <div class="rect2">
+    <div class="rect3" style="background-color: #ceec87;">
         <div id="ball1" class="ball" draggable="true">1</div>
         <div id="ball2" class="ball" draggable="true">2</div>
         <div id="ball3" class="ball" draggable="true">3</div>
@@ -45,35 +45,31 @@
 <script>
     const balls = $('.ball');
     const rect2 = $('.rect2');
+    let myTarget;
 
     const listener = event=>{
         console.log(event.type, event.target);
     }
 
     balls.on('dragstart', function(event){
-        // Jquery的event物件，並沒有包含所有 原本javascipt的特殊事件，如dataTransfer會顯示undefined
-        // 故需使用event.originalEvent 就可以使用原本javascript的event事件了
-        event.originalEvent.dataTransfer.setData('text', event.target.id);
-        // dataTransfer 存放倉庫
-        // setData(key, data)
+        //event.originalEvent.dataTransfer.setData('text', event.target.id);
+        myTarget = $(this);
     });
-    balls.on('dragend', listener);
 
-    rect2.on('dragenter', listener);
-    rect2.on('dragleave', listener);
     rect2.on('dragover', function(event){
-        // 需有preventDefault下方drop事件才能順利觸發
         event.preventDefault();
     });
-    rect2.on('drop', function(event){
-        const id = event.originalEvent.dataTransfer.getData('text');
-        console.log(id);
-        // 物件只有一個，只需append，不須多做移除
-        // $(event.target).append($('#'+id));           
-        $(event.currentTarget).append($('#'+id));   // 需指定currentTarget才會限定target為rect2
-        //targer        -->觸發事件的數據類型                      -->會指向window
-        //currentTarget -->觸發當前處理事件的事件監聽器的DOM物件
+    // 小心 arrow functions 裡的 this
+    rect2.on('drop', (event)=>{
+        let b;
+        if(myTarget){
+            b = myTarget.clone();
+            b.removeAttr('id');
+            $(event.currentTarget).append(b);
+            myTarget = null;
+        }
     });
+
 
 </script>
 

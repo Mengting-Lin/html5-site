@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="info">
+
+</div>
+
+<script>
+    
+    // 字串
+    // const str = "中央氣象局指出，今天白天鋒面仍滯留在台灣上空，天氣仍不穩定";
+    // const ar = str.split('');
+    // ar.sort()
+    // --> 字串會依康熙字典部首進行排序
+
+    // 數字
+    // const ar = [21, 3, 16, 78, 99, 100];
+    // ar.sort((a, b)=>{
+    //     return a-b  由小到大
+    //     return b-a  由大到小
+    // })
+
+    // 有字串有數字
+    const ar = [21, 3, 16, 78, 99, 100, 'b', 'aaaaaaaaaaaa'];
+    // (a,b)參照任意兩數(取值順序其實是有預設邏輯的，知道就好)
+    ar.sort((a, b)=>{
+        console.log(a, b);
+        // 排序規則：長度
+        // return a.toString().length < b.toString().length            // 非一正一負無法比較(二元運算)
+        return a.toString().length < b.toString().length ? -1 : 1;     // 故需運用三元運算 
+    });
+
+    info.innerText = ar.toString();
+
+
+
+</script>
+</body>
+</html>

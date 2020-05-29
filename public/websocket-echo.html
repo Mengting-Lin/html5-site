@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button id="connectBtn">Connect </button>
+<button id="diconnectBtn">Diconnect </button>
+<br>
+<input type="text" id="myInput">
+<button id="sendBtn">送出</button>
+<br>
+<div id="info"></div>
+
+
+<script>
+    let socket;
+
+    const socketHandler = (event)=>{
+        console.log(event.type);
+        switch(event.type){
+            case 'open':
+                info.innerText += `--- 已連線 ---\n\n`;
+                console.log(socket.binaryType);
+                break;
+            case 'message':
+                info.innerText += `message: ${event.data} \n`;
+                break;
+            case 'close':
+                info.innerText += `--- 連線已關閉 ---\n\n`;
+                break;
+        }
+
+    };
+
+    document.addEventListener('click', function(event){
+        console.log(event.target.id)
+        switch(event.target.id){
+            case 'connectBtn':
+                // 如果socket存在且為已連線狀態，再點擊connectBtn也不會再次連線
+                if(socket && socket.readyState===WebSocket.OPEN)
+                    return;
+                // 使用內建的webSocket server
+                // socket = new WebSocket('ws://echo.websocket.org');
+                // 使用自訂server
+                // socket = new WebSocket('ws://localhost:3000');
+                socket = new WebSocket(`ws://${location.host}/小名`);
+                socket.addEventListener('open', socketHandler);
+                socket.addEventListener('message', socketHandler);
+                socket.addEventListener('close', socketHandler);
+                break;
+            case 'diconnectBtn':
+                if(socket && socket.readyState===WebSocket.OPEN)
+                    socket.close();
+                break;
+            case 'sendBtn':
+                if(socket && socket.readyState===WebSocket.OPEN)
+                    socket.send(myInput.value);
+                break;
+        }
+    });
+
+
+
+
+
+</script>
+
+</body>
+</html>
