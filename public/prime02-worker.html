@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<button onclick="calPrime()">get prime numbers</button>
+<input type="text">
+<div id="info"></div>
+<script>
+
+    // dedicated worker
+    // https://developer.mozilla.org/zh-TW/docs/Web/API/Web_Workers_API/Using_web_workers
+    // https://ithelp.ithome.com.tw/articles/10118472
+
+    // PostMessage
+    // https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage
+
+    let worker;
+
+    function calPrime() {
+        if(! worker){
+            worker = new Worker('javascripts/dedicated-worker-prime-numbers.js');
+            worker.onmessage = event=>{
+                let {length, howLong} = event.data;
+                info.innerText = `${length}個, 花費時間 ${howLong} msec`;
+            }
+        }
+
+        worker.postMessage('start');
+    }
+</script>
+</body>
+</html>
